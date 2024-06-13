@@ -1,42 +1,42 @@
 #include "stack.hpp"
+#include <iostream>
 
 
 using namespace std;
 
-stack::stack(){
-
-    tamanho = 0;
-    estrutura = new tipoItem[tamanho];
-
+stack::stack() : tamanho(0), estrutura(new tipoItem[ max_itens ])
+{
 }
 stack::~stack(){
-    delete estrutura;
+    delete[] estrutura;
 }
 
 int stack::lenght()const{
     return tamanho;
 }
 
-void stack::insert(const tipoItem item){
-    if(max_itens == tamanho){
-        "Stack overFlow hehehe";
-        return;
+void stack::insert( const tipoItem item ){
+    
+    if( tamanho == (max_itens-1) ){
+
+        puts("Stack overFlow hehehe");
+        exit(1);
+
     } 
-    estrutura[tamanho] = item;
+    cout << tamanho << endl;
+    estrutura[ tamanho ] = item;
     tamanho++;
+    cout << item << endl;
+
+    
 }
 
 bool stack::isEmpty()const{
-
-    if(tamanho == 0) return true;
-    return false;
-
+    return tamanho == 0;
 }
 
 bool stack::isFull() const{
-
-    if( tamanho == max_itens ) return true;
-    return false;
+    return tamanho == max_itens -1;
 }
 
 void stack::remove(){
@@ -46,14 +46,13 @@ void stack::remove(){
         return;
     }
     
-    cout << "Item removido: [ " << estrutura[tamanho-1] << "]" << endl; 
+    cout << "Item removido: [ " << estrutura[ tamanho-1 ] << "]" << endl; 
     tamanho--;
-
 }
 
 void stack::print()const{
 
-    string separador = (tamanho > 1)?", ":"";
+    string separador = (tamanho > -1 && tamanho < max_itens)?", ":"";
     cout << "[ ";
     for(int i =0 ; i < tamanho; i++){
         cout << estrutura[ i ] << separador;
